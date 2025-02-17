@@ -17,14 +17,17 @@ async function startServer() {
   await connectDB(process.env.MONGO_URI);
 
   // ApolloServer Instance 
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-  });
-
-  // Server start and middleware connection
+  // const server = new ApolloServer({
+  //   typeDefs,
+  //   resolvers,
+  // });
+  const server = new ApolloServer({ typeDefs, resolvers });
   await server.start();
   server.applyMiddleware({ app, path: '/graphql' });
+
+  // Server start and middleware connection
+  // await server.start();
+  // server.applyMiddleware({ app, path: '/graphql' });
 
 // Server listen localhost port 4000
   const PORT = process.env.PORT || 4000;
@@ -36,3 +39,5 @@ async function startServer() {
 startServer().catch((err) => {
   console.error('Failed to start server:', err);
 });
+
+module.exports = app;
